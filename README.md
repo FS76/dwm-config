@@ -1,3 +1,3 @@
 # dwm-config
 
-test
+![myimage](img/dwm.png)
