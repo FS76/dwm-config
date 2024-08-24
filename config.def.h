@@ -44,22 +44,37 @@ typedef struct {
 	const char *name;
 	const void *cmd;
 } Sp;
-const char *spcmd1[] = {"st", "-n", "spterm",	"-g",	"200x44", NULL };
-const char *spcmd2[] = {"st", "-n", "splf",	"-g",	"200x44", "-e", "lfub", NULL };
-const char *spcmd3[] = {"st", "-n", "spnvim",	"-g",	"200x44", "-e", "nvim", NULL };
-const char *spcmd4[] = {"keepassxc", NULL };
+const char *spcmd1[] = {"st", "-n", "spterm", "-g", "200x44", NULL };
+const char *spcmd2[] = {"st", "-n", "spyazi", "-g", "200x44", "-e", "yazi", NULL };
+const char *spcmd3[] = {"keepassxc", NULL };
+const char *spcmd4[] = {"st", "-n", "sphtop", "-g", "200x44", "-e", "htop", NULL };
+const char *spcmd5[] = {"st", "-n", "spotify", "-g", "145x34", "-e", "spotify-launcher", NULL };
+const char *spcmd6[] = {"st", "-n", "spncmpcpp", "-g", "200x44", "-e", "ncmpcpp", NULL };
+const char *spcmd7[] = {"st", "-n", "spnvim", "-g", "200x44", "-e", "nvim", NULL};
+
+// const char *spcmd4[] = {"alacritty", "--class", "sphtop", "-o", "window.dimensions.columns=200", "-o", "window.dimensions.lines=44", "-e", "htop", NULL };
+// const char *spcmd5[] = {"alacritty", "--class", "spncspot", "-o", "window.dimensions.columns=200", "-o", "window.dimensions.lines=44", "-e", "ncspot", NULL };
+// const char *spcmd6[] = {"alacritty", "--class", "spncmpcpp", "-o", "window.dimensions.columns=200", "-o", "window.dimensions.lines=44", "-e", "ncmpcpp", NULL };
 static Sp scratchpads[] = {
-	/* name          cmd  */
+/* name          cmd  */
 	{"spterm",      spcmd1},
-	{"splf",	spcmd2},
-	{"spnvim",	spcmd3},
-	{"keepassxc",   spcmd4},
+	{"spyazi",      spcmd2},
+	{"keepassxc",   spcmd3},
+	{"sphtop",      spcmd4},
+	{"spotify",    spcmd5},
+	{"spncmpcpp",   spcmd6},
+	{"spnvim",	spcmd7},
 };
 
 static const char *const autostart[] = {
+	"polkit-gnome", "/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1", NULL,
 	"dwmblocks", NULL,
-	"picom", NULL,
 	"variety", NULL,
+	"dunst", NULL,
+	"picom", NULL,
+	"udiskie", NULL,
+	"nm-applet", NULL,
+	"flameshot", NULL,
 	// "st", NULL,
 	NULL /* terminate */
 };
@@ -82,20 +97,25 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class	     instance	      title             tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",            NULL,            NULL,             0,         1,          0,           0,        -1 },
-	{ "firefox",         NULL,            NULL,             1 << 1,    0,          0,          -1,        -1 },
-	{ "thunderbird",     NULL,            NULL,             1 << 2,    0,          0,          -1,        -1 },
-	{ "Emacs",           NULL,            NULL,             1 << 3,    0,          0,          -1,        -1 },
-	{ "Code",            NULL,            NULL,             1 << 0,    0,          0,          -1,        -1 },
-	{ "st",		     NULL,            NULL,             0,         0,          1,           0,        -1 },
-	{ "alacritty",       NULL,            NULL,             0,         0,          1,           0,        -1 },
-	{ NULL,              NULL,            "Event Tester",   0,         0,          0,           1,        -1 }, /* xev */
-	{ NULL,	             "spterm",        NULL,		SPTAG(0),  1,	       1,	    0,	      -1 },
-	{ NULL,	             "splf",          NULL,	       	SPTAG(1),  1,	       1,	    0,	      -1 },
-	{ NULL,	             "spnvim",        NULL,	       	SPTAG(2),  1,	       0,	    0,	      -1 },
-	{ NULL,	             "keepassxc",     NULL,	       	SPTAG(3),  1,	       0,	    0,	      -1 },
+	/* class             instance         title             tags mask   isfloating   isterminal   noswallow   monitor */
+	{ "Gimp",            NULL,            NULL,             0,          1,           0,            0,         -1 },
+	{ "firefox",         NULL,            NULL,             1 << 1,     0,           0,           -1,         -1 },
+	{ "thunderbird",     NULL,            NULL,             1 << 2,     0,           0,           -1,         -1 },
+	{ "Emacs",           NULL,            NULL,             1 << 3,     0,           0,           -1,         -1 },
+	{ "Code",            NULL,            NULL,             1 << 0,     0,           0,           -1,         -1 },
+	{ "St",              NULL,            NULL,             0,          0,           1,            0,         -1 },
+	{ "Alacritty",       NULL,            NULL,             0,          0,           1,            0,         -1 },
+	{ "kitty",	     NULL,            NULL,             0,          0,           1,            0,         -1 },
+	{ NULL,              NULL,            "Event Tester",   0,          0,           0,            1,         -1 }, /* xev */
+	{ NULL,	             "spterm",        NULL,		SPTAG(0),   1,	         1,	       1,	  -1 },
+	{ NULL,	             "spyazi",        NULL,	        SPTAG(1),   1,	         1,	       1,	  -1 },
+	{ NULL,	             "keepassxc",     NULL,	        SPTAG(2),   1,	         0,	       0,	  -1 },
+	{ NULL,	             "sphtop",        NULL,	        SPTAG(3),   1,	         0,	       0,	  -1 },
+	{ NULL,	             "spotify",      NULL,	        SPTAG(4),   1,	         0,	       0,	  -1 },
+	{ NULL,	             "spncmpcpp",     NULL,	        SPTAG(5),   1,	         0,	       0,	  -1 },
+	{ NULL,	             "spnvim",	      NULL,	        SPTAG(6),   1,	         0,	       0,	  -1 },
 };
+
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
@@ -179,7 +199,7 @@ static Keychord *keychords[] = {
        &((Keychord){1, {{MODKEY|ControlMask|ShiftMask,			XK_agrave}},			incrovgaps,      {.i = -1 } }),
        &((Keychord){1, {{MODKEY|ControlMask,				XK_a}},				togglegaps,      {0} }),
        &((Keychord){1, {{MODKEY|ControlMask|ShiftMask,			XK_a}},				defaultgaps,     {0} }),
-       &((Keychord){1, {{Mod1Mask,					XK_s}},                         togglesticky,    {0} }),
+       &((Keychord){1, {{Mod1Mask|ShiftMask,				XK_s}},                         togglesticky,    {0} }),
 
        /* Keybindings layout */
        &((Keychord){2, {{Mod1Mask, XK_w}, {0,				XK_t}},                          setlayout,      {.v = &layouts[0]} }),
@@ -210,13 +230,13 @@ static Keychord *keychords[] = {
        &((Keychord){1, {{MODKEY|ShiftMask, 				XK_period}},                     tagmon,         {.i = +1 } }),
 
        /* Scratchpad keys */
-       &((Keychord){1,    {{Mod1Mask,					XK_t}},                          togglescratch,  {.ui = 0 } }),
-       &((Keychord){1,    {{Mod1Mask, 					XK_f}},                          togglescratch,  {.ui = 1 } }),
-       &((Keychord){1,    {{Mod1Mask,					XK_e}},                          togglescratch,  {.ui = 2 } }),
-       &((Keychord){1,    {{Mod1Mask, 					XK_p}},                          togglescratch,  {.ui = 3 } }),
-       // &((Keychord){1,    {{Mod1Mask, XK_h}},                                  togglescratch,  {.ui = 3 } }),
-       // &((Keychord){1,    {{Mod1Mask|ShiftMask, XK_m}},	                       togglescratch,  {.ui = 5 } }),
-       // &((Keychord){1,    {{Mod1Mask|ShiftMask, XK_n}},                        togglescratch,  {.ui = 6 } }),
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0,                           XK_t}},                          togglescratch,  {.ui = 0 } }), /* terminal */
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0,				XK_f}},                          togglescratch,  {.ui = 1 } }), /* yazi */
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0,				XK_p}},                          togglescratch,  {.ui = 2 } }), /* keepass */
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0, 				XK_h}},                          togglescratch,  {.ui = 3 } }), /* sphtop */
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0,				XK_s}},                          togglescratch,  {.ui = 4 } }), /* ncspot */
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0,				XK_m}},	                         togglescratch,  {.ui = 5 } }), /* ncmpcpp */
+       &((Keychord){2, {{Mod1Mask, XK_s}, {0,				XK_n}},                          togglescratch,  {.ui = 6 } }), /* nvim */
 
        /* Exit keys */
        &((Keychord){1,    {{MODKEY|ShiftMask,				XK_q}},				 exitdwm,        {0} }),
@@ -243,10 +263,12 @@ static Keychord *keychords[] = {
        &((Keychord){2,    {{Mod1Mask, XK_d}, {0, 			XK_u}},                       	 spawn,          SHCMD("dmenuunicode") }),
 
        /* Keybindings variety */
-       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_n}},				 spawn,          SHCMD("variety -n") }),
-       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_p}},                       	 spawn,          SHCMD("variety -p") }),
-       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_t}},                       	 spawn,          SHCMD("variety -t") }),
-       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_f}},                       	 spawn,          SHCMD("variety -f") }),
+       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_n}},				 spawn,          SHCMD("variety -n") }), /* variety next */
+       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_p}},                       	 spawn,          SHCMD("variety -p") }), /* variety previous */
+       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_t}},                       	 spawn,          SHCMD("variety -t") }), /* variety trash */
+       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_f}},                       	 spawn,          SHCMD("variety -f") }), /* variety favorite */
+       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_b}},                       	 spawn,          SHCMD("variety --pause") }), /* variety pause */
+       &((Keychord){2,    {{Mod1Mask, XK_n}, {0, 			XK_r}},                       	 spawn,          SHCMD("variety --resume") }), /* variety resume */
 
        /* Keybindings change workspaces (Azerty) */
        TAGKEYS(								XK_ampersand,							     0)
